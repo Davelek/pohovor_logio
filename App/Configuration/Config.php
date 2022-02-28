@@ -11,12 +11,8 @@ namespace App;
  */
 class Config
 {
-
-
     const CACHE_PATH = "Cache/cache.json";
-
     const DRIVER = "MYSQL";
-
     const DB_HOST = "localhost";
     const DB_NAME = "pohovor_uloha";
     const DB_USER = "Davelek";

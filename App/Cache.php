@@ -11,7 +11,6 @@ use App\Config;
  */
 class Cache
 {
-
     /**
      * @var false|string
      */
@@ -22,11 +21,11 @@ class Cache
         $this->cache = self::getCache();
     }
 
-
     /**
      * Get String from cache file or false if it doesnt exist
      * @return false|string
      */
+
     private function getCache()
     {
         if (self::checkIfCacheExist()) {
@@ -40,6 +39,7 @@ class Cache
      * return if cache file exist
      * @return bool
      */
+
     private function checkIfCacheExist()
     {
         $path = Config::CACHE_PATH;
@@ -50,6 +50,7 @@ class Cache
      * Updates cache with new information
      * @param array $data - $data is new product
      */
+
     public function updateCache($data)
     {
         $data = self::prepareData($data);
@@ -57,9 +58,9 @@ class Cache
             self::createCache($data);
             return;
         }
-            $items = json_decode($this->cache, true);
-            $items[] = $data;
-            self::createCache($items);
+        $items = json_decode($this->cache, true);
+        $items[] = $data;
+        self::createCache($items);
     }
 
     /**
@@ -67,6 +68,7 @@ class Cache
      * @param $data
      * @return array
      */
+
     public function prepareData($data)
     {
         return [
@@ -82,6 +84,7 @@ class Cache
      * saving new Cache with $data
      * @param $data
      */
+
     private function createCache($data)
     {
         $fp = fopen(Config::CACHE_PATH, 'w');
@@ -94,6 +97,7 @@ class Cache
      * @param $id
      * @return array|false
      */
+
     public function checkCacheAndIncrementCount($id)
     {
         if ($this->cache) {

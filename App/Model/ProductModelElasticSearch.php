@@ -15,8 +15,6 @@ use IElasticSearchDriver;
  */
 class ProductModelElasticSearch extends Model implements IElasticSearchDriver
 {
-
-
     public function findById($id)
     {
         // TODO: Implement findById() method.

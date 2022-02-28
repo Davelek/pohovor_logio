@@ -18,7 +18,6 @@ use Cache;
  */
 class ProductController
 {
-
     /**
      * @var ProductModelMySQL
      */
@@ -41,13 +40,11 @@ class ProductController
         $this->cache = new Cache();
     }
 
-
     public function detail($id)
     {
         header('Content-type: application/json');
 
         if ($data = $this->cache->checkCacheAndIncrementCount($id)) {
-
             foreach ($data as $item) {
                 if ($item["id"] == $id) {
                     $json = json_encode($item["content"], JSON_PRETTY_PRINT);
@@ -56,14 +53,11 @@ class ProductController
                 }
             }
         } else {
-
             $result = $this->product->findById($id);
             if ($result === false) {
-
                 return json_encode(["message" => "product not found"]);
             }
             $this->cache->updateCache($result);
-
             return json_encode($result, JSON_PRETTY_PRINT);
         }
         return json_encode(["message" => "product not found"]);

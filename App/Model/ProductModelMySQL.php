@@ -24,13 +24,8 @@ class ProductModelMySQL extends Model implements IMySQLDriver
         $sql = 'SELECT * FROM produkty WHERE id = :id';
         $db = static::getDb();
         $stmt = $db->prepare($sql);
-
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-
         $stmt->execute();
-
-        $movie = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $movie;
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

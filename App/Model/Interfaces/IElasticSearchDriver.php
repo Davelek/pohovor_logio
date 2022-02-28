@@ -7,6 +7,7 @@
  * Time: 10:22
  * PHP version: 8.1
  */
+
 interface IElasticSearchDriver
 {
     public function findById($id);
