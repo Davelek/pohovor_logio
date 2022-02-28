@@ -28,6 +28,9 @@ class ProductController
      */
     private $cache;
 
+    /**
+     * set driver and cache
+     */
     public function before()
     {
         if (Config::DRIVER === "MYSQL") {
@@ -43,12 +46,12 @@ class ProductController
     {
         header('Content-type: application/json');
 
-        if ($this->cache->checkCacheAndIncrementCount($id)) {
+        if ($data = $this->cache->checkCacheAndIncrementCount($id)) {
 
-            foreach ($this->cache as $item) {
+            foreach ($data as $item) {
                 if ($item["id"] == $id) {
                     $json = json_encode($item["content"], JSON_PRETTY_PRINT);
-                    $this->cache->updateCache($id);
+                    $this->cache->updateCache($data);
                     return $json;
                 }
             }
@@ -59,12 +62,10 @@ class ProductController
 
                 return json_encode(["message" => "product not found"]);
             }
-            //echo $_SERVER['REQUEST_METHOD'];
-
-            $this->cache->updateCache($id, $result);
+            $this->cache->updateCache($result);
 
             return json_encode($result, JSON_PRETTY_PRINT);
         }
-
+        return json_encode(["message" => "product not found"]);
     }
 }

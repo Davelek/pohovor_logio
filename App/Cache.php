@@ -22,58 +22,66 @@ class Cache
         $this->cache = self::getCache();
     }
 
-    private static function getCache()
+
+    /**
+     * Get String from cache file or false if it doesnt exist
+     * @return false|string
+     */
+    private function getCache()
     {
-        if (self::checkIfCacheExist())
-        {
+        if (self::checkIfCacheExist()) {
             return file_get_contents(Config::CACHE_PATH);
-        }else{
+        } else {
             return false;
         }
     }
 
-    private static function checkIfCacheExist()
+    /**
+     * return if cache file exist
+     * @return bool
+     */
+    private function checkIfCacheExist()
     {
         $path = Config::CACHE_PATH;
-        if (file_exists($path)) {
-            return true;
-        }
-        return false;
+        return file_exists($path);
     }
 
-    public function updateCache($id, $data = [])
+    /**
+     * Updates cache with new information
+     * @param array $data - $data is new product
+     */
+    public function updateCache($data)
     {
-        if (!self::checkIfCacheExist()) {
-            $preparedData[] = self::prepareData($data);
-            self::createCache($preparedData);
+        $data = self::prepareData($data);
+        if (!$this->cache) {
+            self::createCache($data);
             return;
         }
-
-        if (empty($data)){
-
-            $newData = self::checkCacheAndIncrementCount($id);
-            self::createCache($newData);
-        }else {
-
             $items = json_decode($this->cache, true);
-            $preparedData = self::prepareData($data);
-            $items[] = $preparedData;
+            $items[] = $data;
             self::createCache($items);
-        }
     }
 
-    private function prepareData($data)
+    /**
+     * prepare $data for saving in Cache
+     * @param $data
+     * @return array
+     */
+    public function prepareData($data)
     {
-        $dataCache = [
+        return [
             "id" => $data["id"],
             "count" => 1,
             "content" => [
-               $data
+                $data
             ]
         ];
-        return $dataCache;
     }
 
+    /**
+     * saving new Cache with $data
+     * @param $data
+     */
     private function createCache($data)
     {
         $fp = fopen(Config::CACHE_PATH, 'w');
@@ -81,10 +89,14 @@ class Cache
         fclose($fp);
     }
 
-
+    /**
+     * get new cache array with incremented count number, or return false, if $id is not found in cache
+     * @param $id
+     * @return array|false
+     */
     public function checkCacheAndIncrementCount($id)
     {
-        if (self::checkIfCacheExist()) {
+        if ($this->cache) {
             $items = json_decode($this->cache, true);
             $updatedList = [];
             $zmena = false;

@@ -12,10 +12,13 @@ use PDO;
  * Time: 10:23
  * PHP version: 8.1
  */
-class ProductModelMySQL extends \Core\Model implements \IMySQLDriver
+
+use Core\Model;
+use IMySQLDriver;
+
+
+class ProductModelMySQL extends Model implements IMySQLDriver
 {
-
-
     public function findById($id)
     {
         $sql = 'SELECT * FROM produkty WHERE id = :id';
@@ -29,6 +32,5 @@ class ProductModelMySQL extends \Core\Model implements \IMySQLDriver
         $movie = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $movie;
-        // TODO: Implement findById() method.
     }
 }

@@ -7,6 +7,7 @@
  * Time: 10:23
  * PHP version: 8.1
  */
+
 interface IMySQLDriver
 {
     public function findById($id);

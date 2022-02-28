@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use PDO;
+use Core\Model;
+use IElasticSearchDriver;
 
 /**
  * Class ProductModelElasticSearch
@@ -12,7 +13,7 @@ use PDO;
  * Time: 10:30
  * PHP version: 8.1
  */
-class ProductModelElasticSearch extends \Core\Model implements \IElasticSearchDriver
+class ProductModelElasticSearch extends Model implements IElasticSearchDriver
 {
 
 
