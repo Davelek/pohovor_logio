@@ -9,5 +9,5 @@
  */
 interface IMySQLDriver
 {
-
+    public function findById($id);
 }

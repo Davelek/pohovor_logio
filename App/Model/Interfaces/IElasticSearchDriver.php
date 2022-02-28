@@ -9,5 +9,5 @@
  */
 interface IElasticSearchDriver
 {
-
+    public function findById($id);
 }
