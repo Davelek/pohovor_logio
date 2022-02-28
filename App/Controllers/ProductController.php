@@ -43,12 +43,11 @@ class ProductController
     public function detail($id)
     {
         header('Content-type: application/json');
-
         if ($data = $this->cache->checkCacheAndIncrementCount($id)) {
             foreach ($data as $item) {
                 if ($item["id"] == $id) {
                     $json = json_encode($item["content"], JSON_PRETTY_PRINT);
-                    $this->cache->updateCache($data);
+                    $this->cache->updateCache($data, true);
                     return $json;
                 }
             }
@@ -60,6 +59,6 @@ class ProductController
             $this->cache->updateCache($result);
             return json_encode($result, JSON_PRETTY_PRINT);
         }
-        return json_encode(["message" => "product not found"]);
+        return json_encode(["message" => "Something went wrong"]);
     }
 }

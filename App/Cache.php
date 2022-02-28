@@ -51,15 +51,19 @@ class Cache
      * @param array $data - $data is new product
      */
 
-    public function updateCache($data)
+    public function updateCache($data, $prepared = false)
     {
-        $data = self::prepareData($data);
+        $items = $data;
+        if (!$prepared && $this->cache){
+            $temp = self::prepareData($data);
+            $items = json_decode($this->cache, true);
+            $items[] = $temp;
+        }
         if (!$this->cache) {
-            self::createCache($data);
+            $toCache[] = self::prepareData($items);
+            self::createCache($toCache);
             return;
         }
-        $items = json_decode($this->cache, true);
-        $items[] = $data;
         self::createCache($items);
     }
 
